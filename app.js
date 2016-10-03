@@ -25,13 +25,17 @@ function NarrowItDownController(MenuSearchService) {
   menu.found = [];
 
   //console.log("Size of found:" + menu.found);
-  menu.getItems = function(searchTerm) {
-    MenuSearchService.getMatchedMenuItems(menu.searchTerm)
-    .then(function (response) {
-      menu.found = response;
-    }, function (response) {
-      console.log("Error:" + error);
-    });
+  menu.getItems = function() {
+    if (menu.searchTerm.length === 0)
+      menu.found = [];
+    else {
+      MenuSearchService.getMatchedMenuItems(menu.searchTerm)
+      .then(function (response) {
+        menu.found = response;
+      }, function (response) {
+        console.log("Error:" + error);
+      })
+    }
   }
   menu.onRemove = function(itemIndex) {
     console.log("onRemove called");
